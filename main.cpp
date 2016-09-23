@@ -38,7 +38,7 @@ void printContextDrawer(vector<PointMap> *map);
  * @param map
  * @param pretty
  */
-void printJsonArray(vector<PointMap> *map, bool pretty = true);
+void printJsonArray(vector<PointMap> *map, bool pretty = true, FILE *file = NULL);
 
 /**
  * @param map Empty map
@@ -53,9 +53,12 @@ int main(int argc, char **argv) {
 	float density = 96.0f;
 	bool printJS = false;
 	bool debug = false;
+	const char *outputFile = NULL;
+	FILE *file = NULL;
 
 	cmdline::parser *parser = new cmdline::parser();
 	parser->add<string>("svg", 'p', "Path to svg", true);
+	parser->add<string>("output", 'f', "Output file path: /tmp/test.json", false);
 	parser->add<int>("scale", 's', "Image scale", false, scale);
 	parser->add<bool>("debug", 'v', "Prints some debug info", false, debug);
 	parser->add<bool>("js", 'j', "Prints js context drawer", false, printJS);
@@ -65,6 +68,9 @@ int main(int argc, char **argv) {
 	const char *filePath = parser->get<string>("svg").c_str();
 	debug = parser->get<bool>("debug");
 	printJS = parser->get<bool>("js");
+	if(parser->exist("output")) {
+		outputFile = parser->get<string>("output").c_str();
+	}
 
 	NSVGimage *image = NULL;
 	NSVGrasterizer *raster = nsvgCreateRasterizer();
@@ -92,9 +98,11 @@ int main(int argc, char **argv) {
 
 	fillPointMap(&map, raster);
 
-	printJsonArray(&map, true);
+	if(outputFile != NULL) {
+		file = fopen(outputFile, "w");
+	}
 
-	cout << endl;
+	printJsonArray(&map, true, file);
 
 	if(printJS) {
 		printContextDrawer(&map);
@@ -104,6 +112,7 @@ int main(int argc, char **argv) {
 	delete[] img;
 	nsvgDeleteRasterizer(raster);
 	nsvgDelete(image);
+	fclose(file);
 
 	return EXIT_SUCCESS;
 }
@@ -115,7 +124,7 @@ void printContextDrawer(vector<PointMap> *map) {
 	}
 }
 
-void printJsonArray(vector<PointMap> *map, bool pretty) {
+void printJsonArray(vector<PointMap> *map, bool pretty, FILE *file) {
 	string newLine = "";
 	string tabChar = "";
 	if (pretty) {
@@ -145,6 +154,11 @@ void printJsonArray(vector<PointMap> *map, bool pretty) {
 	}
 	buffer.append("]");
 	buffer.append(newLine);
+
+	if(file != NULL) {
+		fwrite(buffer.c_str(), sizeof(char), buffer.length(), file);
+		return;
+	}
 
 	cout << buffer << endl;
 }
