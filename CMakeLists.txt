@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5.0)
-project(FontMapper)
+project(SvgMapper)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2 -std=c++11")
 set(SOURCE_FILES main.cpp libs/nanosvg/src/nanosvg.h libs/nanosvg/src/nanosvgrast.h parser/cmdline.h)
@@ -7,5 +7,7 @@ set(SOURCE_FILES main.cpp libs/nanosvg/src/nanosvg.h libs/nanosvg/src/nanosvgras
 set(NANOSVG_INCLUDE_DIRS libs/nanosvg/src)
 include_directories(${NANOSVG_INCLUDE_DIRS})
 
-add_executable(FontMapper ${SOURCE_FILES})
+add_executable(svgmapper ${SOURCE_FILES})
+
+install(TARGETS svgmapper DESTINATION /usr/bin)
 
