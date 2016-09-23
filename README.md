@@ -14,14 +14,11 @@ make install
 ```bash
 usage: svgmapper --svg=/path/to/file.svg [options] ...
 options:
-  -p, --svg        Path to svg (string)
-  -s, --scale      Image scale (int [=4])
-  -t, --stride     Point stride (int [=4])
-  -d, --density    Document density (pixels per inch) (float [=96])
-  -v, --debug      Prints some debug info (bool [=0])
-  -j, --js         Prints js context drawer (bool [=0])
-  -?, --help       print this message
-
+  -p, --svg      Path to svg (string)
+  -s, --scale    Image scale (int [=4])
+  -v, --debug    Prints some debug info (bool [=0])
+  -j, --js       Prints js context drawer (bool [=0])
+  -?, --help     print this message
 ```
 
 ## Example result

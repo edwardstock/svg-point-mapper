@@ -48,7 +48,6 @@ void printJsonArray(vector<PointMap> *map, bool pretty = true);
 void fillPointMap(vector<PointMap> *map, NSVGrasterizer *raster);
 
 int main(int argc, char **argv) {
-
 	int scale = 4;
 	int stride = 4;
 	float density = 96.0f;
@@ -58,15 +57,11 @@ int main(int argc, char **argv) {
 	cmdline::parser *parser = new cmdline::parser();
 	parser->add<string>("svg", 'p', "Path to svg", true);
 	parser->add<int>("scale", 's', "Image scale", false, scale);
-	parser->add<int>("stride", 't', "Point stride", false, stride);
-	parser->add<float>("density", 'd', "Document density (pixels per inch)", false, density);
 	parser->add<bool>("debug", 'v', "Prints some debug info", false, debug);
 	parser->add<bool>("js", 'j', "Prints js context drawer", false, printJS);
 
 	parser->parse_check(argc, argv);
 	scale = parser->get<int>("scale");
-	stride = parser->get<int>("stride");
-	density = parser->get<float>("density");
 	const char *filePath = parser->get<string>("svg").c_str();
 	debug = parser->get<bool>("debug");
 	printJS = parser->get<bool>("js");
