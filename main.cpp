@@ -38,7 +38,7 @@ void printContextDrawer(vector<PointMap> *map);
  * @param map
  * @param pretty
  */
-void printJsonArray(vector<PointMap> *map, bool pretty = true, FILE *file = NULL);
+void printJsonArray(vector<PointMap> *map, bool pretty = true, FILE *file = nullptr);
 
 /**
  * @param map Empty map
@@ -53,8 +53,8 @@ int main(int argc, char **argv) {
 	float density = 96.0f;
 	bool printJS = false;
 	bool debug = false;
-	const char *outputFile = NULL;
-	FILE *file = NULL;
+	const char *outputFile = nullptr;
+	FILE *file = nullptr;
 
 	cmdline::parser *parser = new cmdline::parser();
 	parser->add<string>("svg", 'p', "Path to svg", true);
@@ -72,12 +72,12 @@ int main(int argc, char **argv) {
 		outputFile = parser->get<string>("output").c_str();
 	}
 
-	NSVGimage *image = NULL;
+	NSVGimage *image = nullptr;
 	NSVGrasterizer *raster = nsvgCreateRasterizer();
 	int width, height;
 
 	image = nsvgParseFromFile(filePath, "px", density);
-	if (image == NULL) {
+	if (image == nullptr) {
 		printf("Could not open SVG image.\n");
 		return EXIT_FAILURE;
 	}
@@ -98,7 +98,7 @@ int main(int argc, char **argv) {
 
 	fillPointMap(&map, raster);
 
-	if(outputFile != NULL) {
+	if(outputFile != nullptr) {
 		file = fopen(outputFile, "w");
 	}
 
@@ -155,7 +155,7 @@ void printJsonArray(vector<PointMap> *map, bool pretty, FILE *file) {
 	buffer.append("]");
 	buffer.append(newLine);
 
-	if(file != NULL) {
+	if(file != nullptr) {
 		fwrite(buffer.c_str(), sizeof(char), buffer.length(), file);
 		return;
 	}
