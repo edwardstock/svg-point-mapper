@@ -15,7 +15,7 @@ make install
 usage: svgmapper --svg=/path/to/file.svg [options] ...
 options:
   -p, --svg       Path to svg (string)
-  -f, --output    Output file path: /tmp/test.json (string [=])
+  -f, --output    By default just print json to stdout. Example file path: /tmp/test.json (string [=])
   -s, --scale     Image scale (int [=4])
   -v, --debug     Prints some debug info (bool [=0])
   -j, --js        Prints js context drawer (bool [=0])

@@ -58,7 +58,7 @@ int main(int argc, char **argv) {
 
 	cmdline::parser *parser = new cmdline::parser();
 	parser->add<string>("svg", 'p', "Path to svg", true);
-	parser->add<string>("output", 'f', "Output file path: /tmp/test.json", false);
+	parser->add<string>("output", 'f', "By default just print json to stdout. Example file path: /tmp/test.json", false);
 	parser->add<int>("scale", 's', "Image scale", false, scale);
 	parser->add<bool>("debug", 'v', "Prints some debug info", false, debug);
 	parser->add<bool>("js", 'j', "Prints js context drawer", false, printJS);
